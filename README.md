@@ -35,9 +35,7 @@ DNF modification tool options:
 ______________________________________________________
 
 Codec Setup options:
-- additional general multimedia codecs
 - libdvdcss/DVD compatibility
-- AMD freeworld driver
 - Nvidia vaapi driver
 - Intel media driver
 
@@ -45,7 +43,7 @@ _______________________________________________________
 
 Package Install Helper:
 - allows you to type in programs you want installed
-and it then searches for those packages with dnf and flatpak
+and it then searches for those packages with dnf, flatpak and snap
 and then installs them.
 ______________________________________________________
 
@@ -56,7 +54,7 @@ after that open the containing folder in terminal and type in ./setup.sh or in G
 
 _______________________________________________________
 
-This version of the script still includes code from the old package-installer.sh script.
+This version of the script still includes code from the old package-installer.sh script of the fedora version.
 
 _______________________________________________________
 DISCLAIMER
