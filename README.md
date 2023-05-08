@@ -17,6 +17,7 @@ start page options:
 ______________________________________________________
 
 Repo Setup gives you the options to install:
+- EPEL (repo)
 - RPM Fusion free (repo)
 - RPM Fusion nonfree (repo)
 - Group core (to enable downloads through software centers)
