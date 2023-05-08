@@ -171,12 +171,10 @@ case $OPTION in
         # Display a submenu with seven options for Codec Setup
         while true; do
         CODEC_OPTION=$(whiptail --title "Repo Setup" --menu "Choose an option" 20 60 8 \
-        "1" "Install general Codecs" \
-        "2" "DVD support" \
-        "3" "AMD" \
-        "4" "Nvidia" \
-        "5" "Intel" \
-        "6" "Back to main menu" \
+        "1" "DVD support" \
+        "2" "Nvidia" \
+        "3" "Intel" \
+        "4" "Back to main menu" \
         3>&1 1>&2 2>&3)
 
         # Check which option was selected and perform the corresponding action
@@ -184,36 +182,12 @@ case $OPTION in
             1)
             {
             echo 0
-                sudo dnf groupupdate -y multimedia --setop="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
-            echo 50
-                sudo dnf groupupdate -y sound-and-video
-            echo 100
-            sleep 1
-                } | whiptail --gauge "Installing Codecs" 6 60 0
-                ;;
-            2)
-            {
-            echo 0
                 sudo dnf install -y libdvdcss
             echo 100
             sleep 1
                 } | whiptail --gauge "Installing Driver" 6 60 0
                 ;;
-            3)
-            {
-            echo 0   
-                sudo dnf swap -y mesa-va-drivers mesa-va-drivers-freeworld
-            echo 25    
-                sudo dnf swap -y mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
-            echo 50    
-                sudo dnf swap -y mesa-va-drivers.i686 mesa-va-drivers-freeworld.i686
-            echo 75    
-                sudo dnf swap -y mesa-vdpau-drivers.i686 mesa-vdpau-drivers-freeworld.i686
-            echo 100
-            sleep 1
-               } | whiptail --gauge "Installing Drivers" 6 60 0
-                ;;
-            4)
+            2)
             {
             echo 0
                sudo dnf install -y nvidia-vaapi-driver
@@ -221,7 +195,7 @@ case $OPTION in
             sleep 1
                 } | whiptail --gauge "Installing Driver" 6 60 0
                 ;;
-            5)
+            3)
             {
             echo 0
                sudo dnf install -y intel-media-driver
@@ -229,7 +203,7 @@ case $OPTION in
             sleep 1
                 } | whiptail --gauge "Installing Driver" 6 60 0
                 ;;
-            6)
+            4)
                 break
                 ;;
             *)
