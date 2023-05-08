@@ -40,7 +40,7 @@ case $OPTION in
             1)
                 {
                 echo 0
-                sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm
+                sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm 2>&1 | tee /tmp/repo_install.log
                 echo 100
                 sleep 1
                 } | whiptail --gauge "Installing Repo" 6 60 0
@@ -48,7 +48,7 @@ case $OPTION in
             2)
                 {
                 echo 0
-                sudo dnf install -y https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm
+                sudo dnf install -y https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm 2>&1 | tee /tmp/repo_install.log
                 echo 50
                 sudo dnf groupupdate -y core
                 echo 100
@@ -58,7 +58,7 @@ case $OPTION in
             3)
                 {
                 echo 0
-                sudo dnf install -y rpmfusion-free-release-tainted
+                sudo dnf install -y rpmfusion-free-release-tainted 2>&1 | tee /tmp/repo_install.log
                 echo 100
                 sleep 1
                 } | whiptail --gauge "Installing Repo" 6 60 0
@@ -66,7 +66,7 @@ case $OPTION in
             4)
                 {
                 echo 0
-                sudo dnf install -y https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm
+                sudo dnf install -y https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm 2>&1 | tee /tmp/repo_install.log
                 echo 50
                 sudo dnf groupupdate -y core
                 echo 100
@@ -76,7 +76,7 @@ case $OPTION in
             5)
                 {
                 echo 0
-                sudo dnf install -y rpmfusion-nonfree-release-tainted
+                sudo dnf install -y rpmfusion-nonfree-release-tainted 2>&1 | tee /tmp/repo_install.log
                 echo 100
                 sleep 1
                 } | whiptail --gauge "Installing Repo" 6 60 0
@@ -84,7 +84,7 @@ case $OPTION in
             6)
                 {
                 echo 0
-                flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+                flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo 2>&1 | tee /tmp/repo_install.log
                 echo 100
                 sleep 1
                 } | whiptail --gauge "Installing Repo" 6 60 0
@@ -92,19 +92,19 @@ case $OPTION in
             7)
                 {
                 echo 0
-                sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm
+                sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm 2>&1 | tee /tmp/repo_install.log
                 echo 14
-                sudo dnf install -y https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm
+                sudo dnf install -y https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm 2>&1 | tee /tmp/repo_install.log
                 echo 28
-                sudo dnf install -y https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm
+                sudo dnf install -y https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm 2>&1 | tee /tmp/repo_install.log
                 echo 42
-                sudo dnf groupupdate -y core
+                sudo dnf groupupdate -y core 2>&1 | tee /tmp/repo_install.log
                 echo 57
-                sudo dnf install -y rpmfusion-free-release-tainted
+                sudo dnf install -y rpmfusion-free-release-tainted 2>&1 | tee /tmp/repo_install.log
                 echo 71
-                sudo dnf install -y rpmfusion-nonfree-release-tainted
+                sudo dnf install -y rpmfusion-nonfree-release-tainted 2>&1 | tee /tmp/repo_install.log
                 echo 85
-                flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+                flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo 2>&1 | tee /tmp/repo_install.log
                 echo 100
                 sleep 1
                 } | whiptail --gauge "Installing Repos" 6 60 0
