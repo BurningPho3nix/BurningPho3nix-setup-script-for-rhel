@@ -22,10 +22,10 @@ OPTION=$(whiptail --title "Menu" --menu "Choose an option" 15 60 5 \
 # Check which option was selected and perform the corresponding action
 case $OPTION in
     1)
-        # Display a submenu with seven options for Repo Setup
+        # Display a submenu with eight options for Repo Setup
         while true; do
         REPO_OPTION=$(whiptail --title "Repo Setup" --menu "Choose an option" 20 60 8 \
-        "1" "Install EPEL"
+        "1" "Install EPEL" \
         "2" "Install RPM Fusion Free" \
         "3" "Install RPM Fusion Free Tainted" \
         "4" "Install RPM Fusion Non-Free" \
