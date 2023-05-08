@@ -22,10 +22,10 @@ OPTION=$(whiptail --title "Menu" --menu "Choose an option" 15 60 5 \
 # Check which option was selected and perform the corresponding action
 case $OPTION in
     1)
-        # Display a submenu with seven options for Repo Setup
+        # Display a submenu with eight options for Repo Setup
         while true; do
         REPO_OPTION=$(whiptail --title "Repo Setup" --menu "Choose an option" 20 60 8 \
-        "1" "Install EPEL"
+        "1" "Install EPEL" \
         "2" "Install RPM Fusion Free" \
         "3" "Install RPM Fusion Free Tainted" \
         "4" "Install RPM Fusion Non-Free" \
@@ -40,7 +40,7 @@ case $OPTION in
             1)
                 {
                 echo 0
-                sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm
+                sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm 2>&1 | tee /tmp/repo_install.log
                 echo 100
                 sleep 1
                 } | whiptail --gauge "Installing Repo" 6 60 0
@@ -48,7 +48,7 @@ case $OPTION in
             2)
                 {
                 echo 0
-                sudo dnf install -y https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm
+                sudo dnf install -y https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm 2>&1 | tee /tmp/repo_install.log
                 echo 50
                 sudo dnf groupupdate -y core
                 echo 100
@@ -58,7 +58,7 @@ case $OPTION in
             3)
                 {
                 echo 0
-                sudo dnf install -y rpmfusion-free-release-tainted
+                sudo dnf install -y rpmfusion-free-release-tainted 2>&1 | tee /tmp/repo_install.log
                 echo 100
                 sleep 1
                 } | whiptail --gauge "Installing Repo" 6 60 0
@@ -66,7 +66,7 @@ case $OPTION in
             4)
                 {
                 echo 0
-                sudo dnf install -y https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm
+                sudo dnf install -y https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm 2>&1 | tee /tmp/repo_install.log
                 echo 50
                 sudo dnf groupupdate -y core
                 echo 100
@@ -76,7 +76,7 @@ case $OPTION in
             5)
                 {
                 echo 0
-                sudo dnf install -y rpmfusion-nonfree-release-tainted
+                sudo dnf install -y rpmfusion-nonfree-release-tainted 2>&1 | tee /tmp/repo_install.log
                 echo 100
                 sleep 1
                 } | whiptail --gauge "Installing Repo" 6 60 0
@@ -84,7 +84,7 @@ case $OPTION in
             6)
                 {
                 echo 0
-                flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+                flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo 2>&1 | tee /tmp/repo_install.log
                 echo 100
                 sleep 1
                 } | whiptail --gauge "Installing Repo" 6 60 0
@@ -92,19 +92,19 @@ case $OPTION in
             7)
                 {
                 echo 0
-                sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm
+                sudo dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-$(rpm -E %rhel).noarch.rpm 2>&1 | tee /tmp/repo_install.log
                 echo 14
-                sudo dnf install -y https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm
+                sudo dnf install -y https://mirrors.rpmfusion.org/free/el/rpmfusion-free-release-$(rpm -E %rhel).noarch.rpm 2>&1 | tee /tmp/repo_install.log
                 echo 28
-                sudo dnf install -y https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm
+                sudo dnf install -y https://mirrors.rpmfusion.org/nonfree/el/rpmfusion-nonfree-release-$(rpm -E %rhel).noarch.rpm 2>&1 | tee /tmp/repo_install.log
                 echo 42
-                sudo dnf groupupdate -y core
+                sudo dnf groupupdate -y core 2>&1 | tee /tmp/repo_install.log
                 echo 57
-                sudo dnf install -y rpmfusion-free-release-tainted
+                sudo dnf install -y rpmfusion-free-release-tainted 2>&1 | tee /tmp/repo_install.log
                 echo 71
-                sudo dnf install -y rpmfusion-nonfree-release-tainted
+                sudo dnf install -y rpmfusion-nonfree-release-tainted 2>&1 | tee /tmp/repo_install.log
                 echo 85
-                flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+                flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo 2>&1 | tee /tmp/repo_install.log
                 echo 100
                 sleep 1
                 } | whiptail --gauge "Installing Repos" 6 60 0
@@ -171,12 +171,10 @@ case $OPTION in
         # Display a submenu with seven options for Codec Setup
         while true; do
         CODEC_OPTION=$(whiptail --title "Repo Setup" --menu "Choose an option" 20 60 8 \
-        "1" "Install general Codecs" \
-        "2" "DVD support" \
-        "3" "AMD" \
-        "4" "Nvidia" \
-        "5" "Intel" \
-        "6" "Back to main menu" \
+        "1" "DVD support" \
+        "2" "Nvidia" \
+        "3" "Intel" \
+        "4" "Back to main menu" \
         3>&1 1>&2 2>&3)
 
         # Check which option was selected and perform the corresponding action
@@ -184,36 +182,12 @@ case $OPTION in
             1)
             {
             echo 0
-                sudo dnf groupupdate -y multimedia --setop="install_weak_deps=False" --exclude=PackageKit-gstreamer-plugin
-            echo 50
-                sudo dnf groupupdate -y sound-and-video
-            echo 100
-            sleep 1
-                } | whiptail --gauge "Installing Codecs" 6 60 0
-                ;;
-            2)
-            {
-            echo 0
                 sudo dnf install -y libdvdcss
             echo 100
             sleep 1
                 } | whiptail --gauge "Installing Driver" 6 60 0
                 ;;
-            3)
-            {
-            echo 0   
-                sudo dnf swap -y mesa-va-drivers mesa-va-drivers-freeworld
-            echo 25    
-                sudo dnf swap -y mesa-vdpau-drivers mesa-vdpau-drivers-freeworld
-            echo 50    
-                sudo dnf swap -y mesa-va-drivers.i686 mesa-va-drivers-freeworld.i686
-            echo 75    
-                sudo dnf swap -y mesa-vdpau-drivers.i686 mesa-vdpau-drivers-freeworld.i686
-            echo 100
-            sleep 1
-               } | whiptail --gauge "Installing Drivers" 6 60 0
-                ;;
-            4)
+            2)
             {
             echo 0
                sudo dnf install -y nvidia-vaapi-driver
@@ -221,7 +195,7 @@ case $OPTION in
             sleep 1
                 } | whiptail --gauge "Installing Driver" 6 60 0
                 ;;
-            5)
+            3)
             {
             echo 0
                sudo dnf install -y intel-media-driver
@@ -229,7 +203,7 @@ case $OPTION in
             sleep 1
                 } | whiptail --gauge "Installing Driver" 6 60 0
                 ;;
-            6)
+            4)
                 break
                 ;;
             *)
@@ -247,10 +221,14 @@ then
 elif command -v flatpak &> /dev/null
 then
     PACKAGE_MANAGER="flatpak"
+elif command -v snap &> /dev/null
+then
+    PACKAGE_MANAGER="snap"
 else
-    echo "Error: Neither dnf nor flatpak is available on this system."
+    echo "Error: Neither dnf, flatpak, nor snap is available on this system."
     exit 1
 fi
+
 # Prompt the user to enter the packages they want to install
 read -p "Enter the names of packages you want to install (separated by spaces): " PACKAGES
 
@@ -267,15 +245,21 @@ do
         then
             echo "$PACKAGE not found in system repositories, attempting to install using flatpak..."
             flatpak install $PACKAGE -y
+        elif command -v snap &> /dev/null
+        then
+            echo "$PACKAGE not found in system repositories, attempting to install using snap..."
+            snap install $PACKAGE
         else
-            echo "Error: $PACKAGE not found in system repositories, and flatpak is not available on this system."
+            echo "Error: $PACKAGE not found in system repositories, and neither flatpak nor snap is available on this system."
         fi
     elif [ "$PACKAGE_MANAGER" = "flatpak" ]
     then
         flatpak install $PACKAGE -y
+    elif [ "$PACKAGE_MANAGER" = "snap" ]
+    then
+        snap install $PACKAGE
     fi
 done
-       
         ;;
     5)
       {
