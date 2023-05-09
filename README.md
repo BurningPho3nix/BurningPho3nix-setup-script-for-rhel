@@ -1,4 +1,4 @@
-# BurningPho3nix setup script for RHEL (optimized for RHEL 9.1)
+# BurningPho3nix setup script for RHEL (optimized for RHEL 9.x)
 
 This project helps you installing RPM-Fusion, making dnf.conf changes, installing Codecs and installing applications quickly on RHEL.
 
