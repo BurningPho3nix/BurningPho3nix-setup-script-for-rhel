@@ -214,52 +214,54 @@ case $OPTION in
     done
         ;;
     4)
-        ## PLACEHOLDER
-        if command -v dnf &> /dev/null
-then
-    PACKAGE_MANAGER="dnf"
-elif command -v flatpak &> /dev/null
-then
-    PACKAGE_MANAGER="flatpak"
-elif command -v snap &> /dev/null
-then
-    PACKAGE_MANAGER="snap"
-else
-    echo "Error: Neither dnf, flatpak, nor snap is available on this system."
+       if command -v dnf &> /dev/null; then
+        PACKAGE_MANAGER="dnf"
+       elif command -v flatpak &> /dev/null; then
+        PACKAGE_MANAGER="flatpak"
+       elif command -v snap &> /dev/null
+       then
+        PACKAGE_MANAGER="snap"
+       else
+        whiptail --title "Error" --msgbox "Neither dnf, flatpak, nor snap is available on this system." 10 40
     exit 1
 fi
 
-# Prompt the user to enter the packages they want to install
-read -p "Enter the names of packages you want to install (separated by spaces): " PACKAGES
+# Prompt the user to enter the names of packages they want to install
+PACKAGES=$(whiptail --title "Package Installation" --inputbox "Enter the names of packages you want to install (separated by spaces):" 10 60 3>&1 1>&2 2>&3)
+
+# Check if the user canceled or did not provide any packages
+if [ $? -ne 0 ] || [ -z "$PACKAGES" ]; then
+    whiptail --title "Error" --msgbox "No packages provided. Exiting." 10 40
+    exit 1
+fi
 
 # Attempt to install each package using the appropriate package manager
-for PACKAGE in $PACKAGES
-do
-    echo "Trying to install $PACKAGE using $PACKAGE_MANAGER..."
-    if [ "$PACKAGE_MANAGER" = "dnf" ]
-    then
-        if dnf search -C $PACKAGE | grep -q "^$PACKAGE"
-        then
+{
+echo 0
+for PACKAGE in $PACKAGES; do
+    if [ "$PACKAGE_MANAGER" = "dnf" ]; then
+        if dnf search -C $PACKAGE | grep -q "^$PACKAGE" >/dev/null 2>&1; then
             sudo dnf install $PACKAGE -y
-        elif command -v flatpak &> /dev/null
-        then
-            echo "$PACKAGE not found in system repositories, attempting to install using flatpak..."
+ echo 33
+        elif command -v flatpak &> /dev/null; then
+            whiptail --title "Package Installation" --msgbox "$PACKAGE not found in system repositories, attempting to install using flatpak." 10 60
             flatpak install $PACKAGE -y
-        elif command -v snap &> /dev/null
-        then
-            echo "$PACKAGE not found in system repositories, attempting to install using snap..."
+ echo 66
+         elif command -v snap &> /dev/null; then
+            whiptail --title "Package Installation" --msgbox "$PACKAGE not found in system repositories and flatpak attempting to install using snap." 10 60
             snap install $PACKAGE
+ echo 100
         else
-            echo "Error: $PACKAGE not found in system repositories, and neither flatpak nor snap is available on this system."
+            whiptail --title "Error" --msgbox "$PACKAGE not found in system repositories and flatpak and snap is not available on this system." 10 60
         fi
-    elif [ "$PACKAGE_MANAGER" = "flatpak" ]
-    then
-        flatpak install $PACKAGE -y
-    elif [ "$PACKAGE_MANAGER" = "snap" ]
-    then
+    elif [ "$PACKAGE_MANAGER" = "flatpak" ]; then
+        flatpak install $PACKAGE
+    elif [ "$PACKAGE_MANAGER" = "snap" ]; then
         snap install $PACKAGE
     fi
 done
+sleep 1
+ } | whiptail --gauge "Installing Packages" 6 60 0
         ;;
     5)
       {
