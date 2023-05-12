@@ -168,9 +168,9 @@ case $OPTION in
     done
         ;;
     3)
-        # Display a submenu with seven options for Codec Setup
+        # Display a submenu with four options for Codec Setup
         while true; do
-        CODEC_OPTION=$(whiptail --title "Repo Setup" --menu "Choose an option" 20 60 8 \
+        CODEC_OPTION=$(whiptail --title "Codec Setup" --menu "Choose an option" 20 60 8 \
         "1" "DVD support" \
         "2" "Nvidia" \
         "3" "Intel" \
