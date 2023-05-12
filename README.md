@@ -1,6 +1,6 @@
 # BurningPho3nix setup script for RHEL (optimized for RHEL 9.x)
 
-This project helps you installing RPM-Fusion, making dnf.conf changes and installing applications quickly on CentOS Stream.
+This project helps you installing RPM-Fusion, making dnf.conf changes and installing applications and codecs quickly on RHEL.
 
 ______________________________________________________
 
